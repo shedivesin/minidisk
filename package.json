@@ -1,0 +1,10 @@
+{
+  "name": "minidisk",
+  "main": "minidisk.js",
+  "dependencies": {
+    "mocha": "^9.2.0"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test mocha"
+  }
+}
