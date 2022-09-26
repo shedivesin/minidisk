@@ -1,9 +1,5 @@
 "use strict";
 
-function assert(x, message) {
-  if(!x) { throw new Error(message); }
-}
-
 function incircle(p, a, b, c) {
   if(a === undefined) { return false; }
 
