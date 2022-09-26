@@ -12,7 +12,7 @@ describe("minidisk", () => {
     ["three symmetric points", [[-1, 0], [0, -1], [0, 1]], [0, 0, 1]],
     [
       "an equilateral triangle",
-      [[0, -1], [1, Math.sqrt(3)], [-1, Math.sqrt(3)]],
+      [[0, -2], [Math.sqrt(3), 1], [-Math.sqrt(3), 1]],
       [0, 0, 2],
     ],
     ["a square", [[0, -1], [1, 0], [0, 1], [-1, 0]], [0, 0, 1]],
