@@ -29,7 +29,10 @@ describe("minidisk", () => {
     ],
   ]) {
     it(`should return the minimum bounding disk of ${name}`, () => {
-      assert.deepStrictEqual(minidisk(input), output);
+      const actual = minidisk(input);
+      assert(Math.abs(actual[0] - output[0]) <= 1e-9, "x");
+      assert(Math.abs(actual[1] - output[1]) <= 1e-9, "y");
+      assert(Math.abs(actual[2] - output[2]) <= 1e-9, "radius");
     });
   }
 });
