@@ -41,6 +41,35 @@ function in_circle(p, a, b, c) {
   return Math.sign(orientation) * determinant >= 0;
 }
 
+// What is the smallest circle through points A, B, and C?
+// NB: This will work even if given no points, only A, or only A and B.
+function circle_through(a, b, c) {
+  // No supporting points.
+  if(a === undefined) { return [0, 0, 0]; }
+
+  // One supporting point.
+  const ax = a[0];
+  const ay = a[1];
+  if(b === undefined) { return [ax, ay, 0]; }
+
+  // Two supporting points.
+  const bx = b[0] - ax;
+  const by = b[1] - ay;
+  if(c === undefined) {
+    return [ax + bx / 2, ay + by / 2, Math.hypot(bx, by) / 2];
+  }
+
+  // Three supporting points.
+  const cx = c[0] - ax;
+  const cy = c[1] - ay;
+  const b_sq = bx * bx + by * by;
+  const c_sq = cx * cx + cy * cy;
+  const d = bx * cy - by * cx;
+  const u = (cy * b_sq - by * c_sq) / d;
+  const v = (bx * c_sq - cx * b_sq) / d;
+  return [ax + u / 2, ay + v / 2, Math.hypot(u, v) / 2];
+}
+
 function minidisk(p) {
   const n = p.length;
 
@@ -57,37 +86,9 @@ function minidisk(p) {
     }
   }
 
-  // No supporting points.
-  if(a < 0) {
-    return [0, 0, 0];
-  }
-
-  // One supporting point.
-  const [ax, ay] = p[a];
-  if(b < 0) {
-    return [ax, ay, 0];
-  }
-
-  // Two supporting points.
-  let [bx, by] = p[b];
-  bx -= ax;
-  by -= ay;
-  if(c < 0) {
-    bx /= 2;
-    by /= 2;
-    return [ax + bx, ay + by, Math.hypot(bx, by)];
-  }
-
-  // Three supporting points.
-  let [cx, cy] = p[c];
-  cx -= ax;
-  cy -= ay;
-  const b_sq = bx * bx + by * by;
-  const c_sq = cx * cx + cy * cy;
-  const d = bx * cy - by * cx;
-  const u = (cy * b_sq - by * c_sq) / d;
-  const v = (bx * c_sq - cx * b_sq) / d;
-  return [ax + u / 2, ay + v / 2, Math.hypot(u, v) / 2];
+  // Return the smallest circle through those supporting points.
+  // NB: a, b, or c may be -1. p[a], p[b], p[c] may therefore be undefined.
+  return circle_through(p[a], p[b], p[c]);
 }
 
 module.exports = minidisk;
